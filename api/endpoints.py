@@ -23,13 +23,13 @@ def hola_mundo():
 @app.route('/usuario',methods=['POST'])
 def create_user():
    
-    name = request.json["nombre"]
+    name = request.json["nombre"] #debe ingresar un nombre y una contraseña
     contraseña = request.json["contraseña"]
 
     
     hash = generate_password_hash(contraseña)
     id = mongo.db.users.insert(
-            {'usuario':name,'contraseña':hash}
+            {'usuario':name,'contraseña':hash} 
         )
     respuesta = {
 
@@ -42,36 +42,66 @@ def create_user():
 
     return {
         "mensaje":"usuario creado",
-        "su token":str(id)}
+        "su token":str(id)} #me devuelve un token que necesitara para crear un campo de peli
         
     
 
-@app.route('/usuario/<nombre>',methods=["GET"])
-def nombre_usuario(nombre):
-    usuario = mongo.db.users.find_one({'usuario':nombre})
-    salida = {"usuario": usuario["usuario"],"contraseña":usuario["contraseña"]}
-   
+@app.route('/usuario/<usuario>',methods=["GET"]) #con el nombre de usuario, te saca su reseña y calificacion, y el titulo de la pelicula
+def nombre_usuario(usuario):
+    reseñas = mongo.db.reseñas.find()
     
-    return {"resultados": salida}
+    reseñas = list(reseñas)
+    pelicula = [i["pelicula"] for i in reseñas if usuario in i.values()]
+    pelicula = "".join(pelicula)
+    
+    reseña = [i["reseña"] for i in reseñas if usuario in i.values()]
+    reseña = "".join(reseña)
+    
+    calificacion =[i["calificacion"] for i in reseñas if usuario in i.values()]
+    calificacion = "".join(calificacion)
+    
+    
+    respuesta = {
+        "pelicula": pelicula,
+        "reseña": reseña,
+        "calificacion":calificacion}
+    c = [i for g in reseñas for k,i in g.items()]
+    
+    if usuario in c:
+    
+        return respuesta
+    else:
+        return {"mensaje":"usuario incorrecto o inexistente"}
+
 
 @app.route('/pelicula',methods=['POST'])
 def pelicula():
     pelicula = request.json["titulo"]
+    token = request.json["token"]
     
+    users = mongo.db.users.find()
+    users = list(users)
+    token = ObjectId(token)
     
-    id = mongo.db.peliculas.insert(
-        {'pelicula':pelicula}
+    c = [i for g in users for k,i in g.items()]
+    
+    if token in c:
+        id = mongo.db.peliculas.insert(
+                {'pelicula':pelicula}
+                
+            )
         
-    )
+        respuesta = {
+                "id": str(id),
+                'pelicula': pelicula
+            }
+        
+        return {"añadido espacio de pelicula":pelicula}
+        
+    else:
+        return {"mensaje": "token no valido"}
 
-    respuesta = {
-        "id": str(id),
-        'pelicula': pelicula
-    }
-
-    return {"mensaje":pelicula}
-
-@app.route('/pelicula/<pelicula>',methods=["GET"]) #me saca con el nombre el id del user
+@app.route('/pelicula/<pelicula>',methods=["GET"]) #me saca el id de la pelicula para hacer la reseña
 def id_user(pelicula):
     h = mongo.db.peliculas.find_one({'pelicula':pelicula})
     r = dumps(h["_id"])
@@ -83,12 +113,12 @@ def id_user(pelicula):
 def crear_reseña():
     
     usuario = request.json["usuario"]
-    contraseña = request.json["contraseña"]
+    
     titulo = request.json["titulo"]
     reseña = request.json["reseña"]
     
     pred = preprocessing_sentence(reseña)
-    pred = prediccion_reseña(pred)
+    pred = prediccion_reseña(pred,loaded_model)
     
     
     
@@ -116,10 +146,7 @@ def crear_reseña():
 
 
 
-"""
-r = "Simply put, Freaky sucks."
 
-"""
     
         
   
