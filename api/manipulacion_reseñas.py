@@ -81,6 +81,7 @@ def prediccion_reseña(reseña,loaded_model):
     reseña = pad_sequences(reseña, padding='post', maxlen=100)
     #prediccion
     pred = loaded_model.predict(reseña)
+    print(pred)
     if pred > 0.5:
         return ":)"
     else:
