@@ -107,7 +107,19 @@ https://www.rottentomatoes.com
 
 -API: Contiene un archivo con los endpoints, la programación defensiva que uso para corregir los errores que me salían en mi API, otro donde creo la aplicación y la conecto a mi base de datos de mongo, y otro archivo donde guardo las funciones que limpiarán y harán las predicciones de las reseñas. Aparecen dos archivos aparte, que es el modelo y sus pesos que cargo en la API para predecir.
 
--Datasets
+-Datasets: Uno es el datasets de las reseñas original sacado de Kaggle, y otro ya después de limpiarlo. Otro es de tipos de personalidad en funcion de una serie de comentarios de una persona que era para una futura ampliación de este proyecto pero que no voy a entrar mucho en detalles.
+
+-Entrenando_modelos: Hay dos archivos, modelo convolucional y el de multicapa, donde pruebo esos dos tipos de modelo para las reseñas, y en el que al final, me quedo con el modelo Multicapa. El otro es para el de las personalidades, pero como ya he comentado, no entraré en detalles.
+
+-Graficos_reseñas: Como explique antes hice unos gráficos de las reseñas de mi base de datos.
+
+-Limpieza_datasets: Limpio el datasets de las reseñas y el de las personalidades.
+
+-Predicciones: Se almacenan los modelos json y h5, que son los archivos que contienen el modelo y los pesos de la red multicapa utilizado para predecir las reseñas, y con la que me fue bastante bien. Hay otro archivo nootebook donde pruebo esas predicciones de reseñas de este modelo, con algunos ejemplos.
+
+-PowerPoint: Una presentación muy generalizada, donde explico el proyecto por encima
+
+-main.py donde se ejecuta y actualiza mi api
 
 
 
