@@ -2,7 +2,7 @@
 from api.app import app
 from flask import jsonify,request
 
-
+#HE GENERADO UNA SERIE DE ERRORES PARA PODER ENTENDERME CUANDO UTILICE LA API
 @app.errorhandler(500)
 def algo_mal(error=None):
     mensaje_error = jsonify({

@@ -61,7 +61,7 @@ def nombre_usuario(usuario):
 
 
 
-@app.route('/pelicula',methods=['POST'])
+@app.route('/pelicula',methods=['POST']) #con este endpoint creo el titulo de la pelicula para que puedan hacer las reseñas sobre ellas
 def pelicula():
     pelicula = request.json["titulo"]
     token = request.json["token"]
@@ -146,7 +146,7 @@ def peli_reseñas(titulo):
         return {"mensaje":"titulo incorrecto,inexistente o sin reseñas añadidas"}
 
 
-@app.route('/reseñas')
+@app.route('/reseñas') #todas las reseñas
 def todo_usuarios():
     users = mongo.db.reseñas.find()
     r = dumps(users)

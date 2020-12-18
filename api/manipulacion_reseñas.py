@@ -29,6 +29,7 @@ print("modelo cargado")
 
 
 
+
 #funcion de limpieza de reseña
 def preprocessing_sentence(sentence):
     stoplist = set(stopwords.words("english"))
@@ -86,7 +87,6 @@ def prediccion_reseña(reseña,loaded_model):
         return ":)"
     else:
         return ":("
-
 
 
 
