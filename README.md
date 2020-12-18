@@ -12,6 +12,7 @@ He partido de un dataset que contiene 50000 reseñas de películas de idbm, cali
 Para entrenar el modelo de red neuronal, he tenido que hacer una buena limpieza de todas las reseñas para dejarlas lo más depuradas posibles para que sea más facil la tarea de predicción. Esto implica:
 
 -Eliminar las etiquetas HTML o de otro lenguaje de Web que pudiera haber.
+
 -Eliminar caracteres o palabras irrelevantes (preposiciones, signos de puntuación, espacios en blanco...) La libreria **NLTK** ya cuenta con su propia lista de palabras irrelevantes y que he utilizado para sacarlas de las reseñas.
 
 Al final, nos hemos quedado con una lista de palabras únicamente que servirán para entrenar nuestro modelo de manera más eficiente.
